@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.exercise.basic_CRUD_mongo.CRUD.Entity.Product;
 import com.exercise.basic_CRUD_mongo.CRUD.Service.ProductService;
 import com.exercise.basic_CRUD_mongo.CRUD.dto.ProductDTO;
+import com.exercise.basic_CRUD_mongo.global.exceptions.ResourceNotFoundException;
+
 
 @RestController
 @RequestMapping("/product")
@@ -30,7 +32,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getOne(@PathVariable ("id") int id){
+    public ResponseEntity<Product> getOne(@PathVariable ("id") int id) throws ResourceNotFoundException{
         return ResponseEntity.ok(productService.getOne(id));
     }
 
@@ -40,12 +42,12 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> update(@PathVariable ("id") int id, @RequestBody ProductDTO dto){
+    public ResponseEntity<Product> update(@PathVariable ("id") int id, @RequestBody ProductDTO dto) throws ResourceNotFoundException{
         return ResponseEntity.ok(productService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Product> delete(@PathVariable ("id") int id){
+    public ResponseEntity<Product> delete(@PathVariable ("id") int id) throws ResourceNotFoundException{
         return ResponseEntity.ok(productService.detele(id));
     }
 }
