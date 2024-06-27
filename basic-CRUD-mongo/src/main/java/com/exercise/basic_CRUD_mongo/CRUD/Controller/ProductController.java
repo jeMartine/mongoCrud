@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.exercise.basic_CRUD_mongo.CRUD.Entity.Product;
 import com.exercise.basic_CRUD_mongo.CRUD.Service.ProductService;
 import com.exercise.basic_CRUD_mongo.CRUD.dto.ProductDTO;
+import com.exercise.basic_CRUD_mongo.global.exceptions.AttributeException;
 import com.exercise.basic_CRUD_mongo.global.exceptions.ResourceNotFoundException;
 
 
@@ -37,12 +38,12 @@ public class ProductController {
     }
 
     @PostMapping()
-    public ResponseEntity<Product> save (@RequestBody ProductDTO dto){
+    public ResponseEntity<Product> save (@RequestBody ProductDTO dto) throws AttributeException{
         return ResponseEntity.ok(productService.save(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> update(@PathVariable ("id") int id, @RequestBody ProductDTO dto) throws ResourceNotFoundException{
+    public ResponseEntity<Product> update(@PathVariable ("id") int id, @RequestBody ProductDTO dto) throws ResourceNotFoundException, AttributeException{
         return ResponseEntity.ok(productService.update(id, dto));
     }
 

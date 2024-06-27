@@ -1,6 +1,5 @@
 package com.exercise.basic_CRUD_mongo.CRUD.Service;
 
-import java.io.FileNotFoundException;
 import java.util.Comparator;
 import java.util.List;
 
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.exercise.basic_CRUD_mongo.CRUD.Entity.Product;
 import com.exercise.basic_CRUD_mongo.CRUD.Repository.ProductRepository;
 import com.exercise.basic_CRUD_mongo.CRUD.dto.ProductDTO;
+import com.exercise.basic_CRUD_mongo.global.exceptions.AttributeException;
 import com.exercise.basic_CRUD_mongo.global.exceptions.ResourceNotFoundException;
 
 @Service
@@ -37,16 +37,21 @@ public class ProductService {
     }
 
     //guardar un producto
-    public Product save(ProductDTO productDTO){
+    public Product save(ProductDTO productDTO) throws AttributeException{
+        if(productRepository.existsByName(productDTO.getName()))
+            throw new AttributeException("Name already in use");
         int id = autoIncrementID();
         Product product = new Product(id, productDTO.getName(), productDTO.getPrice());
         return productRepository.save(product);
     }
 
     //actualizar un producto
-    public Product update(int id, ProductDTO productDTO) throws ResourceNotFoundException{
+    public Product update(int id, ProductDTO productDTO) throws ResourceNotFoundException, AttributeException{
         Product product = productRepository.findById(id)
             .orElseThrow(()->new ResourceNotFoundException("Product not found"));
+
+        if (productRepository.existsByName(productDTO.getName()) && productRepository.findByName(productDTO.getName()).get().getId() != id)
+            throw new AttributeException("Name already in use");
         product.setName(productDTO.getName());
         product.setPrice(productDTO.getPrice());
         return productRepository.save(product);
