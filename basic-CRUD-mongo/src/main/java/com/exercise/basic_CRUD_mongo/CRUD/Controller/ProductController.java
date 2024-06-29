@@ -2,7 +2,9 @@ package com.exercise.basic_CRUD_mongo.CRUD.Controller;
 
 import java.util.List;
 
+import com.exercise.basic_CRUD_mongo.global.dto.MessageDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,10 @@ import com.exercise.basic_CRUD_mongo.CRUD.Service.ProductService;
 import com.exercise.basic_CRUD_mongo.CRUD.dto.ProductDTO;
 import com.exercise.basic_CRUD_mongo.global.exceptions.AttributeException;
 import com.exercise.basic_CRUD_mongo.global.exceptions.ResourceNotFoundException;
+
+import jakarta.validation.Valid;
+
+import javax.swing.*;
 
 
 @RestController
@@ -38,17 +44,23 @@ public class ProductController {
     }
 
     @PostMapping()
-    public ResponseEntity<Product> save (@RequestBody ProductDTO dto) throws AttributeException{
-        return ResponseEntity.ok(productService.save(dto));
+    public ResponseEntity<MessageDto> save (@Valid @RequestBody ProductDTO dto) throws AttributeException{
+        Product product = productService.save(dto);
+        String message = "Product " + product.getName() + " have been saved";
+        return ResponseEntity.ok(new MessageDto(HttpStatus.OK, message));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Product> update(@PathVariable ("id") int id, @RequestBody ProductDTO dto) throws ResourceNotFoundException, AttributeException{
-        return ResponseEntity.ok(productService.update(id, dto));
+    public ResponseEntity<MessageDto> update(@PathVariable ("id") int id, @Valid @RequestBody ProductDTO dto) throws ResourceNotFoundException, AttributeException{
+        Product product = productService.update(id, dto);
+        String message = "Product "+ product.getName()+ " have been updated";
+        return ResponseEntity.ok(new MessageDto(HttpStatus.OK, message));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Product> delete(@PathVariable ("id") int id) throws ResourceNotFoundException{
-        return ResponseEntity.ok(productService.detele(id));
+    public ResponseEntity<MessageDto> delete(@PathVariable ("id") int id) throws ResourceNotFoundException{
+        Product product = productService.detele(id);
+        String message = "Product " + product.getName() + " have been deleted";
+        return ResponseEntity.ok(new MessageDto(HttpStatus.OK, message));
     }
 }
