@@ -1,1 +1,23 @@
-<p>update works!</p>
+<app-menu></app-menu>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-4 mx-auto">
+            <h4 class="text-center mb-4">Update Product</h4>
+            <form>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="name" placeholder="Product name" autocomplete="off"
+                        required>
+                </div>
+                <div class="mb-3">
+                    <input type="numberPrice" class="form-control" id="price" placeholder="Product price"
+                        autocomplete="off" required>
+                </div>
+                <button class="btn btn-outline-success w-100 mb-3">
+                    <i class="far fa-edit"></i> Update</button>
+                <button class="btn btn-outline-primary w-100" routerLink="/">
+                    <i class="fas fa-arrow-alt-circle-left"></i> back
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

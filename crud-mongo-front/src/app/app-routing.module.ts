@@ -4,6 +4,7 @@ import { ListComponent } from './product/list.component';
 import { DetailComponent } from './product/detail.component';
 import { UpdateComponent } from './product/update.component';
 import { CreateComponent } from './product/create.component';
+import { MenuComponent } from './menu/menu.component';
 
 const routes: Routes = [
   {path: '', component: ListComponent},
