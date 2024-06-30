@@ -36,7 +36,13 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 3000, // Tiempo en milisegundos para que desaparezca el toastr
+      positionClass: 'toast-top-center', // Posición del toastr
+      preventDuplicates: true, // Evitar duplicados
+      closeButton: true, // Mostrar botón de cerrar
+      progressBar: true // Mostrar barra de progreso
+    }),
     SweetAlert2Module.forRoot(),
     HttpClientModule,
     FormsModule

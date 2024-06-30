@@ -8,7 +8,7 @@ import { MenuComponent } from './menu/menu.component';
 
 const routes: Routes = [
   {path: '', component: ListComponent},
-  {path: 'detail', component: DetailComponent},
+  {path: 'detail/:id', component: DetailComponent},
   {path: 'create', component: CreateComponent},
   {path: 'update', component: UpdateComponent},
   {path: '**', redirectTo:'',pathMatch: 'full'}
