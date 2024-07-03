@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../model/product';
 import { ProductService } from '../services/product.service';
 import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list',
@@ -14,8 +15,8 @@ export class ListComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private toast: ToastrService 
-  ){}
+    private toast: ToastrService
+  ) { }
 
   ngOnInit(): void {
     this.getProducts();
@@ -26,10 +27,48 @@ export class ListComponent implements OnInit {
       data => {
         this.products = data;
       },
-      err =>{
-        this.toast.error(err.error.message, 'Error', {timeOut: 3000, positionClass: 'toast-top-center'});
+      err => {
+        this.toast.error(err.error.message, 'Error', { timeOut: 3000, positionClass: 'toast-top-center' });
       }
     );
+  }
+
+  onDelete(id: number): void {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This cannot undo',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Ok',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.value) {
+        this.productService.delete(id).subscribe(
+          data => {
+            Swal.fire(
+              'Success',
+              data.message ,
+              'success'
+            )
+            this.getProducts();
+          },
+          err => {
+            this.toast.error(err.error.message, 'Error', {
+              timeOut: 3000,
+              positionClass: 'toast-top-center',
+            });
+          }
+        );
+
+        console.log('deleted product' + id);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'canceled',
+          'Product not deleted',
+          'error'
+        )
+      }
+    })
   }
 
 }

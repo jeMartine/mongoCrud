@@ -36,7 +36,7 @@ export class DetailComponent implements OnInit{
           closeButton: true, // Asegúrate de que el botón de cerrar esté disponible
           progressBar: true // Muestra una barra de progreso en la alerta
         });
-        this.router.navigate([''])
+        this.router.navigate(['']);
       }
     );
   }

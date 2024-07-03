@@ -18,9 +18,9 @@
                 <td>{{prod.price}} $</td>
                 <td><button class="btn btn-outline-primary" routerLink="/detail/{{prod.id}}"><i class="fa-regular fa-eye"></i>
                         View</button>
-                <td><button class="btn btn-outline-warning" routerLink="/update"><i class="fa-regular fa-edit"></i>
+                <td><button class="btn btn-outline-warning" routerLink="/update/{{prod.id}}"><i class="fa-regular fa-edit"></i>
                         Edit</button>
-                <td><button class="btn btn-outline-danger"><i class="fa-regular fa-trash-alt"></i> Delete</button>
+                <td><button class="btn btn-outline-danger" (click)="onDelete(prod.id)"><i class="fa-regular fa-trash-alt"></i> Delete</button>
                 </td>
             </tr>
         </tbody>
