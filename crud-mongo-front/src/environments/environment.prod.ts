@@ -1,4 +1,5 @@
 export const environment = {
-    production: true
+    production: true,
+    apiResrURL: 'https://variable-candra-devjorge-de727040.koyeb.app'
   };
   
