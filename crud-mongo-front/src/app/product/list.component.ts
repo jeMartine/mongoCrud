@@ -47,7 +47,7 @@ export class ListComponent implements OnInit {
           data => {
             Swal.fire(
               'Success',
-              data.message ,
+              data.message,
               'success'
             )
             this.getProducts();
