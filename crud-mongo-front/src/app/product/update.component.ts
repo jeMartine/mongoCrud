@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Product } from '../model/product';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-update',
@@ -11,14 +12,13 @@ import { Product } from '../model/product';
 })
 export class UpdateComponent implements OnInit {
 
-  id!: number;
   product!: Product;
 
   constructor(
     private productService: ProductService,
     private toast: ToastrService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private storageService: StorageService
   ) { }
 
   ngOnInit(): void {
@@ -26,7 +26,7 @@ export class UpdateComponent implements OnInit {
   }
 
   onUpdate(): void {
-    this.productService.update(this.id, this.product).subscribe(
+    this.productService.update(this.product.id, this.product).subscribe(
       data => {
         this.toast.success(data.message, 'Ok', {
           timeOut: 3000,
@@ -44,21 +44,8 @@ export class UpdateComponent implements OnInit {
   }
 
   getProduct(): void {
-    this.id = this.activatedRoute.snapshot.params['id'];
-    this.productService.detail(this.id).subscribe(
-      data => {
-        this.product = data;
-      },
-      err => {
-        this.toast.error(err.error.message, 'Error', {
-          timeOut: 3000,
-          positionClass: 'toast-top-center',
-          closeButton: true, // Asegúrate de que el botón de cerrar esté disponible
-          progressBar: true // Muestra una barra de progreso en la alerta
-        });
-        this.router.navigate(['']);
-      }
-    );
+    this.product = this.storageService.getProduct();
+    this.storageService.clear();
   }
 
 }
